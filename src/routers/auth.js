@@ -8,7 +8,7 @@ import {
   loginUserController,
   logoutController,
 } from '../controllers/auth.js';
-import { registerUserSchema, loginUserSchema } from '../validation/auth.js';
+import { registerLoginUserSchema } from '../validation/auth.js';
 
 const router = express.Router();
 const jsonParser = express.json();
@@ -16,14 +16,14 @@ const jsonParser = express.json();
 router.post(
   '/register',
   jsonParser,
-  validateBody(registerUserSchema),
+  validateBody(registerLoginUserSchema),
   ctrlWrapper(registerUserController),
 );
 
 router.post(
   '/login',
   jsonParser,
-  validateBody(loginUserSchema),
+  validateBody(registerLoginUserSchema),
   ctrlWrapper(loginUserController),
 );
 
