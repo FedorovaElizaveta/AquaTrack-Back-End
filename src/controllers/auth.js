@@ -10,7 +10,7 @@ import {
 import { setupCookie } from '../utilts/setupCookie.js';
 
 export const registerUserController = async (req, res) => {
-  const { name, email } = req.body;
+  const { email } = req.body;
 
   const user = await findUserByEmail(email);
   if (user) {
@@ -23,7 +23,6 @@ export const registerUserController = async (req, res) => {
     status: 201,
     message: 'Successfully registered a user!',
     data: {
-      name,
       email,
     },
   });
@@ -31,9 +30,7 @@ export const registerUserController = async (req, res) => {
 
 export const loginUserController = async (req, res) => {
   const { email, password } = req.body;
-
   const user = await findUserByEmail(email);
-  console.log('loginUserController - user: >> ', user);
   if (!user) {
     throw createHttpError(401, 'User not authorized!');
   }

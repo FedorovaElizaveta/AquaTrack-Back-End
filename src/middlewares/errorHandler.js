@@ -7,7 +7,7 @@ export const errorHandler = (err, req, res, next) => {
       message: err.name,
       data: err,
     });
-    //console.log('middleware errorHandler-next>> ', next);
+    console.log('middleware errorHandler-next>> ', next);
     return;
   }
 
