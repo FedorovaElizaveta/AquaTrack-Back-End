@@ -14,4 +14,4 @@ const waterSchema = new Schema(
   },
 );
 
-export const Water = model("Water", waterSchema);
+export const WaterCollection = model("WaterCollection", waterSchema);

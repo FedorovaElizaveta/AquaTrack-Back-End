@@ -7,19 +7,21 @@ import {
     deleteWaterController,
   } from '../controllers/water.js';
   import { ctrlWrapper } from '../utilts/ctrlWrapper.js';
-  import { validateMongoId } from '../middlewares/validateMongoId.js';
+  import { isValidId } from '../middlewares/isValidId.js';
   import { validateBody } from '../middlewares/validateBody.js';
   import { createWaterSchema, updateWaterSchema } from '../validation/water.js';
-import { checkAuth } from '../middlewares/checkAuth.js';
+  import { auth } from '../middlewares/auth.js';
 
 const router = express.Router();
+const jsonParser = express.json();
 
 
-router.use(checkAuth);
 
-router.post('/',  validateBody(createWaterSchema),  ctrlWrapper(createWaterController));
-router.get('/:id', validateMongoId('id'), ctrlWrapper(getWaterByIdController));
-router.patch('/:id', validateBody(updateWaterSchema),  validateMongoId('id'),  ctrlWrapper(updateWaterController));
-router.delete( '/:id',  validateMongoId('id'),   ctrlWrapper(deleteWaterController));
+router.use(auth);
+
+router.post('/',  jsonParser, validateBody(createWaterSchema),  ctrlWrapper(createWaterController));
+router.get('/:id', isValidId, ctrlWrapper(getWaterByIdController));
+router.patch('/:id', jsonParser, validateBody(updateWaterSchema),  isValidId,  ctrlWrapper(updateWaterController));
+router.delete( '/:id',  isValidId,   ctrlWrapper(deleteWaterController));
 
 export default router;
