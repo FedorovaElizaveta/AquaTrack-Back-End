@@ -40,7 +40,7 @@ export const loginUserController = async (req, res) => {
     throw createHttpError(401, 'User not authorized!');
   }
 
-  const userSession = await setupSession(user._id); // треба засетапити інф-ю про наші куки
+  const userSession = await setupSession(user._id); // засетапити інф-ю про наші куки
   setupCookie(res, userSession);
   res.status(200).json({
     status: 200,
