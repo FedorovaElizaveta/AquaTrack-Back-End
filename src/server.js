@@ -6,6 +6,7 @@ import router from './routers/index.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import cookieParser from 'cookie-parser';
+import authRouter from './routers/auth.js';
 
 const PORT = Number(env('PORT', '5108'));
 
@@ -23,6 +24,8 @@ export const setupServer = () => {
   );
 
   app.use(router);
+
+  app.use('/auth', authRouter); // for login/logout/register
 
   app.use('*', notFoundHandler);
 
