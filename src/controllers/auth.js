@@ -1,32 +1,6 @@
-//import bcrypt from 'bcrypt';
-//import createHttpError from 'http-errors';
-// import {
-//   createUser,
-//   findUserByEmail,
-//   setupSession,
-//   logoutUser,
-// } from '../services/auth.js';
-
 import { registerUser, loginUser, logoutUser } from '../services/auth.js';
 
-//import { setupCookie } from '../utilts/setupCookie.js';
-
-// export const registerUserController = async (req, res) => {
-//   const { email } = req.body;
-
-//   const user = await findUserByEmail(email);
-//   if (user) {
-//     throw createHttpError(409, 'Email in use');
-//   }
-//   await createUser(req.body);
-//   res.status(201).json({
-//     status: 201,
-//     message: 'Successfully registered a user!',
-//     data: {
-//       email,
-//     },
-//   });
-// };
+import { setupCookie } from '../utilts/setupCookie.js';
 
 export async function registerUserController(req, res) {
   const payload = {
@@ -41,30 +15,6 @@ export async function registerUserController(req, res) {
   });
 }
 
-// export const loginUserController = async (req, res) => {
-//   const { email, password } = req.body;
-//   const user = await findUserByEmail(email);
-//   if (!user) {
-//     //throw createHttpError(401, 'User not authorized!');
-//     throw createHttpError(404, 'User not found!');
-//   }
-
-//   const isEqualPassword = await bcrypt.compare(password, user.password);
-//   if (!isEqualPassword) {
-//     throw createHttpError(401, 'User not authorized!');
-//   }
-
-//   const userSession = await setupSession(user._id); // засетапити інф-ю про наші куки
-//   setupCookie(res, userSession);
-//   res.status(200).json({
-//     status: 200,
-//     message: 'Successfully logged in an user!',
-//     data: {
-//       accessToken: userSession.accessToken,
-//     },
-//   });
-// };
-
 export async function loginUserController(req, res) {
   const { email, password } = req.body;
 
@@ -75,10 +25,7 @@ export async function loginUserController(req, res) {
     expires: session.refreshTokenValidUntil,
   });
 
-  res.cookie('sessionId', session._id, {
-    httpOnly: true,
-    expires: session.refreshTokenValidUntil,
-  });
+  setupCookie(res, session); // 14-09-2024
 
   res.send({
     status: 200,
