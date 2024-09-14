@@ -1,7 +1,6 @@
 {
   "name": "aquatrack-back-end",
   "version": "1.0.0",
-  "description": "",
   "type": "module",
   "main": "src/index.js",
   "scripts": {
@@ -18,6 +17,7 @@
   "license": "ISC",
   "devDependencies": {
     "@eslint/js": "^9.10.0",
+    "@faker-js/faker": "^9.0.0",
     "@redocly/cli": "^1.25.0",
     "eslint": "^9.10.0",
     "eslint-plugin-react": "^7.35.2",
@@ -31,7 +31,7 @@
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "express": "^4.20.0",
+    "express": "^4.21.0",
     "google-auth-library": "^9.14.1",
     "handlebars": "^4.7.8",
     "http-errors": "^2.0.0",
@@ -40,7 +40,9 @@
     "mongoose": "^8.6.2",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.15",
+    "pino": "^9.4.0",
     "pino-http": "^10.3.0",
     "swagger-ui-express": "^5.0.1"
-  }
+  },
+  "description": ""
 }
