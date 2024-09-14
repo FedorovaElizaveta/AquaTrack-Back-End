@@ -5,13 +5,11 @@ import { Session } from '../db/models/session.js';
 import { User } from '../db/models/user.js';
 import { createSession } from '../utilts/createSession.js';
 
-export const findUserByEmail = (email) => User.findOne({ email });
-
 export async function registerUser(payload) {
   const maybeUser = await User.findOne({ email: payload.email });
 
   if (maybeUser) {
-    throw createHttpError(409, 'Email already in user');
+    throw createHttpError(409, 'Email already in use');
   }
   payload.password = await bcrypt.hash(payload.password, 10);
   return User.create(payload);
@@ -34,14 +32,9 @@ export async function loginUser(email, password) {
 
   return Session.create({
     userId: maybeUser._id,
-    ...createSession(), //14-09-2024
+    ...createSession(),
   });
 }
-
-export const setupSession = async (userId) => {
-  await Session.deleteOne({ userId });
-  return Session.create({ userId, ...createSession() });
-};
 
 export const logoutUser = async (sessionId) => {
   await Session.deleteOne({ _id: sessionId });

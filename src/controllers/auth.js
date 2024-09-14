@@ -8,7 +8,7 @@ export async function registerUserController(req, res) {
     password: req.body.password,
   };
   const registeredUser = await registerUser(payload);
-  res.send({
+  res.status(201).json({
     status: 201,
     message: 'Successfully registered a user!',
     data: registeredUser,
@@ -20,14 +20,9 @@ export async function loginUserController(req, res) {
 
   const session = await loginUser(email, password);
 
-  res.cookie('refreshToken', session.refreshToken, {
-    httpOnly: true,
-    expires: session.refreshTokenValidUntil,
-  });
+  setupCookie(res, session);
 
-  setupCookie(res, session); // 14-09-2024
-
-  res.send({
+  res.status(200).json({
     status: 200,
     message: 'Successfully logged in an user!',
     data: {
