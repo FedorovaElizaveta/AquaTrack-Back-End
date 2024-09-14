@@ -11,7 +11,7 @@ import {
     const data = {
       ...req.body,
       userId: req.user.id,
-      userNorm: req.user.dailyWaterConsumption,
+      userNorm: req.user.dailyWater,
     };
   
     const water = await createWater(data);

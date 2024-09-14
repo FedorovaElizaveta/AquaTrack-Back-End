@@ -1,18 +1,12 @@
 import { WaterCollection } from '../db/models/water.js';
 
 export const createWater = async (payload) => {
-    let { amount, date, norm, userId, userNorm } = payload;
+    let { amount, date, userId } = payload;
   
-    if (!norm) {
-      norm = userNorm;
-    }
   
-    const percentage = ((amount / (norm * 1000)) * 100).toFixed(2);
     const water = await WaterCollection.create({
       amount,
       date,
-      norm,
-      percentage,
       owner: userId,
     });
   
