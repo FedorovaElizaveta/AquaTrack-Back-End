@@ -10,7 +10,7 @@ import {
   export const createWaterController = async (req, res) => {
     const data = {
       ...req.body,
-      userId: req.user.id,
+      userId: req.user._id,
       userNorm: req.user.dailyWater,
     };
   
@@ -25,7 +25,7 @@ import {
   
   export const getWaterByIdController = async (req, res, next) => {
     const { id } = req.params;
-    const userId = req.user.id;
+    const userId = req.user._id;
   
     const water = await getWaterById(id, userId);
   
@@ -43,10 +43,11 @@ import {
   
   export const updateWaterController = async (req, res, next) => {
     const { id } = req.params;
-    const userId = req.user.id;
+    const userId = req.user._id;
     const data = { ...req.body };
+    const norm = req.user.dailyWater;
   
-    const result = await updateWaterById(id, userId, data);
+    const result = await updateWaterById(id, userId, data, norm);
   
     if (!result) {
       next(createHttpError(404, 'Water not found'));
@@ -62,7 +63,7 @@ import {
   
   export const deleteWaterController = async (req, res, next) => {
     const { id } = req.params;
-    const userId = req.user.id;
+    const userId = req.user._id;
   
     const water = await deleteWaterById(id, userId);
   
@@ -71,9 +72,5 @@ import {
       return;
     }
   
-    res.status(200).json({
-      status: 200,
-      message: 'Successfully delete a water!',
-      data: water,
-    });
+    res.status(204).end();
   };

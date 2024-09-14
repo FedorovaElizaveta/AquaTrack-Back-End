@@ -1,18 +1,18 @@
 import { WaterCollection } from '../db/models/water.js';
 
 export const createWater = async (payload) => {
-    let { amount, date, userId } = payload;
+    let { amount, date, userId, userNorm } = payload;
   
   
+    const percentage = ((amount / (userNorm * 1000)) * 100).toFixed(2);
     const water = await WaterCollection.create({
       amount,
       date,
+      percentage,
       owner: userId,
     });
   
-    const { _id, ...other } = water._doc;
-    const data = { id: _id, ...other };
-    return data;
+    return water;
   };
 
   
@@ -23,16 +23,15 @@ export const createWater = async (payload) => {
     });
   
     if (!water) return null;
-  
-    const { _id, ...other } = water._doc;
-    const data = { id: _id, ...other };
-    return data;
+
+    return water;
   };
 
   export const updateWaterById = async (
     waterId,
     userId,
     payload,
+    userNorm,
     options = {},
   ) => {
     const water = await getWaterById(waterId, userId);
@@ -42,14 +41,13 @@ export const createWater = async (payload) => {
     const {
       amount = water.amount,
       date = water.date,
-      norm = water.norm,
     } = payload;
   
-    const percentage = ((amount / (norm * 1000)) * 100).toFixed(2);
+    const percentage = ((amount / (userNorm * 1000)) * 100).toFixed(2);
   
     const rawResult = await WaterCollection.findOneAndUpdate(
       { _id: waterId, owner: userId },
-      { amount, date, norm, percentage },
+      { amount, date, percentage },
       {
         new: true,
         includeResultMetadata: true,
@@ -59,9 +57,8 @@ export const createWater = async (payload) => {
   
     if (!rawResult || !rawResult.value) return null;
   
-    const { _id, ...other } = rawResult.value._doc;
-    const data = { id: _id, ...other };
-    return data;
+
+    return rawResult;
   };
   
   export const deleteWaterById = async (waterId, userId) => {
@@ -72,7 +69,5 @@ export const createWater = async (payload) => {
   
     if (!water) return null;
   
-    const { _id, ...other } = water._doc;
-    const data = { id: _id, ...other };
-    return data;
+    return water;
   };
