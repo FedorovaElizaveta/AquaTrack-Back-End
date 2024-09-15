@@ -1,3 +1,5 @@
+import fs from 'fs/promises';
+import path from 'node:path';
 import createHttpError from 'http-errors';
 import {
   registerUser,
@@ -68,6 +70,17 @@ export const refreshTokensController = async (req, res) => {
 };
 
 export const patchUserController = async (req, res, next) => {
+  let avatar = null;
+
+  if (typeof req.file !== 'undefined') {
+    await fs.rename(
+      req.file.path,
+      path.resolve('src/public/avatars', req.file.filename),
+    );
+
+    avatar = `http://localhost:5108/avatars/${req.file.filename}`;
+  }
+
   const userId = req.user._id;
 
   const user = {
@@ -77,6 +90,7 @@ export const patchUserController = async (req, res, next) => {
     weight: req.body.weight,
     sportTime: req.body.sportTime,
     dailyWater: req.body.dailyWater,
+    avatar,
   };
 
   const patchedUser = await patchUser(userId, user);

@@ -16,6 +16,7 @@ import {
   patchUserSchema,
 } from '../validation/auth.js';
 import { auth } from '../middlewares/auth.js';
+import { upload } from '../middlewares/upload.js';
 
 const router = express.Router();
 const jsonParser = express.json();
@@ -42,6 +43,7 @@ router.patch(
   '/profile',
   auth,
   jsonParser,
+  upload.single('avatar'),
   validateBody(patchUserSchema),
   ctrlWrapper(patchUserController),
 );
