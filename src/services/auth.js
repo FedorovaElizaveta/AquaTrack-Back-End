@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import createHttpError from 'http-errors';
-import { Session } from '../db/models/session.js';
 import { User } from '../db/models/user.js';
+import { Session } from '../db/models/session.js';
 import { createSession } from '../utilts/createSession.js';
 
 export async function registerUser(payload) {

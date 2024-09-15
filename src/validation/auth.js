@@ -14,3 +14,7 @@ export const patchUserSchema = Joi.object({
   dailyWater: Joi.number(),
   // avatar: Joi.any().optional(),
 });
+
+export const loginWithGoogleOAuthSchema = Joi.object({
+  code: Joi.string().required(),
+});
