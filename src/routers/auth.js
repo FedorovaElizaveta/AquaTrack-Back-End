@@ -37,6 +37,7 @@ router.post('/logout', ctrlWrapper(logoutController));
 router.post('/refresh', ctrlWrapper(refreshTokensController));
 
 router.patch(
+  '/profile',
   jsonParser,
   validateBody(patchUserSchema),
   ctrlWrapper(patchUserController),
