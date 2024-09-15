@@ -7,6 +7,7 @@ import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import cookieParser from 'cookie-parser';
 import path from 'node:path';
+import authRouter from './routers/auth.js'; //for login/logout/register 15-09-2024 нова помилка
 
 const PORT = Number(env('PORT', '5108'));
 
@@ -26,6 +27,8 @@ export const setupServer = () => {
   );
 
   app.use(router);
+
+  app.use('/auth', authRouter); // for login/logout/register 15-09-2024 нова помилка
 
   app.use('*', notFoundHandler);
 
