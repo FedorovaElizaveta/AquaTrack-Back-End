@@ -1,14 +1,12 @@
 import { WaterCollection } from '../db/models/water.js';
 
 export const createWater = async (payload) => {
-    let { amount, date, userId, userNorm } = payload;
+    let { amount, date, userId } = payload;
   
   
-    const percentage = ((amount / (userNorm * 1000)) * 100).toFixed(2);
     const water = await WaterCollection.create({
       amount,
       date,
-      percentage,
       owner: userId,
     });
   
@@ -31,7 +29,6 @@ export const createWater = async (payload) => {
     waterId,
     userId,
     payload,
-    userNorm,
     options = {},
   ) => {
     const water = await getWaterById(waterId, userId);
@@ -43,11 +40,10 @@ export const createWater = async (payload) => {
       date = water.date,
     } = payload;
   
-    const percentage = ((amount / (userNorm * 1000)) * 100).toFixed(2);
   
     const rawResult = await WaterCollection.findOneAndUpdate(
       { _id: waterId, owner: userId },
-      { amount, date, percentage },
+      { amount, date },
       {
         new: true,
         includeResultMetadata: true,

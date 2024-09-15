@@ -11,7 +11,6 @@ import {
     const data = {
       ...req.body,
       userId: req.user._id,
-      userNorm: req.user.dailyWater,
     };
   
     const water = await createWater(data);
@@ -45,9 +44,8 @@ import {
     const { id } = req.params;
     const userId = req.user._id;
     const data = { ...req.body };
-    const norm = req.user.dailyWater;
   
-    const result = await updateWaterById(id, userId, data, norm);
+    const result = await updateWaterById(id, userId, data);
   
     if (!result) {
       next(createHttpError(404, 'Water not found'));
