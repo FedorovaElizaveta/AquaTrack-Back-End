@@ -37,6 +37,7 @@ router.post('/logout', ctrlWrapper(logoutController));
 router.post('/refresh', ctrlWrapper(refreshTokensController));
 
 router.patch(
+  '/patch', // 15-09-2024   змінити на потрібну папку !!!
   jsonParser,
   validateBody(patchUserSchema),
   ctrlWrapper(patchUserController),

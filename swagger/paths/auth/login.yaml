@@ -1,0 +1,74 @@
+tags:
+  - Auth
+summary: Login user
+operationId: loginUser
+description: ‘Login of user’
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - email
+          - password
+        properties:
+          email:
+            description: 'User`s email'
+            type: string
+            example: 'ira55@gmail.com'
+          password:
+            description: 'User`s password'
+            type: string
+            example: ira55
+responses:
+  '200':
+    description: 'Login user'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'Successfully logged in an user!'
+            data:
+              type: object
+              required:
+                - accessToken
+              properties:
+                accessToken:
+                  type: string
+                  example: 5Rb8g9eKeZtQJQWqdFkfr3XRMmkl1oiLku39SQhJ
+  '401':
+    $ref: ../../components/responses/401.yaml
+  # '404':
+  #   $ref: ../../components/responses/404.yaml
+  '404':
+    description: 'User not found'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 404
+            message:
+              type: string
+              example: 'User not found'
+            data:
+              type: object
+              example: {}
