@@ -14,6 +14,7 @@ import {
   registerLoginUserSchema,
   patchUserSchema,
 } from '../validation/auth.js';
+import { auth } from '../middlewares/auth.js';
 
 const router = express.Router();
 const jsonParser = express.json();
@@ -37,6 +38,8 @@ router.post('/logout', ctrlWrapper(logoutController));
 router.post('/refresh', ctrlWrapper(refreshTokensController));
 
 router.patch(
+  '/profile',
+  auth,
   jsonParser,
   validateBody(patchUserSchema),
   ctrlWrapper(patchUserController),
