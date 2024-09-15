@@ -1,4 +1,3 @@
-//import crypto from 'node:crypto';
 import bcrypt from 'bcrypt';
 import createHttpError from 'http-errors';
 import { Session } from '../db/models/session.js';
@@ -80,4 +79,9 @@ export const patchUser = async (userId, user, options = {}) => {
   if (!result || result.value === null) return null;
 
   return result.value;
+};
+
+export const getUserInfoService = async (id) => {
+  const user = await User.findById(id);
+  return user;
 };

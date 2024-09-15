@@ -9,6 +9,7 @@ import {
   logoutController,
   refreshTokensController,
   patchUserController,
+  getUserInfoController,
 } from '../controllers/auth.js';
 import {
   registerLoginUserSchema,
@@ -44,5 +45,7 @@ router.patch(
   validateBody(patchUserSchema),
   ctrlWrapper(patchUserController),
 );
+
+router.get('/info', auth, ctrlWrapper(getUserInfoController));
 
 export default router;

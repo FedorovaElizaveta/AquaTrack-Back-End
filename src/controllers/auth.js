@@ -5,6 +5,7 @@ import {
   logoutUser,
   refreshTokens,
   patchUser,
+  getUserInfoService,
 } from '../services/auth.js';
 
 import { setupCookie } from '../utilts/setupCookie.js';
@@ -91,5 +92,20 @@ export const patchUserController = async (req, res, next) => {
     status: 200,
     message: 'Successfully patched a user!',
     data: patchedUser,
+  });
+};
+
+export const getUserInfoController = async (req, res) => {
+  const user = req.user;
+  const userId = user._id;
+  const userInfo = await getUserInfoService(userId);
+
+  if (!userInfo) {
+    throw createHttpError(404, 'User not found');
+  }
+
+  res.json({
+    status: 200,
+    data: userInfo,
   });
 };
