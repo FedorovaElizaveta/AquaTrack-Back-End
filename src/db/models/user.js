@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose";
+import { model, Schema } from 'mongoose';
 
 const userSchema = new Schema(
   {
@@ -11,8 +11,33 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    name: {
+      type: String,
+    },
+    gender: {
+      type: String,
+      enum: ['woman', 'man'],
+      default: 'woman',
+      required: true,
+    },
+    weight: {
+      type: Number,
+      default: 0,
+    },
+    sportTime: {
+      type: Number,
+      default: 0,
+    },
+    dailyWater: {
+      type: Number,
+      default: 1.5,
+    },
+    avatar: {
+      type: String,
+      default: null,
+    },
   },
-  { timestamps: true, versionKey: false }
+  { timestamps: true, versionKey: false },
 );
 
 userSchema.methods.toJSON = function () {
@@ -21,4 +46,4 @@ userSchema.methods.toJSON = function () {
   return obj;
 };
 
-export const User = model("User", userSchema);
+export const User = model('User', userSchema);
