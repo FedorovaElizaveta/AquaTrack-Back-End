@@ -1,3 +1,5 @@
+import fs from 'fs/promises';
+import path from 'node:path';
 import createHttpError from 'http-errors';
 import {
   registerUser,
@@ -5,6 +7,7 @@ import {
   logoutUser,
   refreshTokens,
   patchUser,
+  getUserInfoService,
 } from '../services/auth.js';
 
 import { setupCookie } from '../utilts/setupCookie.js';
@@ -67,6 +70,17 @@ export const refreshTokensController = async (req, res) => {
 };
 
 export const patchUserController = async (req, res, next) => {
+  let avatar = null;
+
+  if (typeof req.file !== 'undefined') {
+    await fs.rename(
+      req.file.path,
+      path.resolve('src/public/avatars', req.file.filename),
+    );
+
+    avatar = `http://localhost:5108/avatars/${req.file.filename}`;
+  }
+
   const userId = req.user._id;
 
   const user = {
@@ -76,6 +90,7 @@ export const patchUserController = async (req, res, next) => {
     weight: req.body.weight,
     sportTime: req.body.sportTime,
     dailyWater: req.body.dailyWater,
+    avatar,
   };
 
   const patchedUser = await patchUser(userId, user);
@@ -91,5 +106,20 @@ export const patchUserController = async (req, res, next) => {
     status: 200,
     message: 'Successfully patched a user!',
     data: patchedUser,
+  });
+};
+
+export const getUserInfoController = async (req, res) => {
+  const user = req.user;
+  const userId = user._id;
+  const userInfo = await getUserInfoService(userId);
+
+  if (!userInfo) {
+    throw createHttpError(404, 'User not found');
+  }
+
+  res.json({
+    status: 200,
+    data: userInfo,
   });
 };

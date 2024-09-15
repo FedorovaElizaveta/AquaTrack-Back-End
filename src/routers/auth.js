@@ -9,11 +9,14 @@ import {
   logoutController,
   refreshTokensController,
   patchUserController,
+  getUserInfoController,
 } from '../controllers/auth.js';
 import {
   registerLoginUserSchema,
   patchUserSchema,
 } from '../validation/auth.js';
+import { auth } from '../middlewares/auth.js';
+import { upload } from '../middlewares/upload.js';
 
 const router = express.Router();
 const jsonParser = express.json();
@@ -37,10 +40,14 @@ router.post('/logout', ctrlWrapper(logoutController));
 router.post('/refresh', ctrlWrapper(refreshTokensController));
 
 router.patch(
-  '/patch', // 15-09-2024   змінити на потрібну папку !!!
+  '/profile',
+  auth,
   jsonParser,
+  upload.single('avatar'),
   validateBody(patchUserSchema),
   ctrlWrapper(patchUserController),
 );
+
+router.get('/info', auth, ctrlWrapper(getUserInfoController));
 
 export default router;
