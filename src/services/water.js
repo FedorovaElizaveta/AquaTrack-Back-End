@@ -1,69 +1,74 @@
 import { WaterCollection } from '../db/models/water.js';
 
 export const createWater = async (payload) => {
-    let { amount, date, userId } = payload;
+  let { amount, date, userId } = payload;
 
+  const water = await WaterCollection.create({
+    amount,
+    date,
+    owner: userId,
+  });
 
-    const water = await WaterCollection.create({
-      amount,
-      date,
-      owner: userId,
-    });
+  return water;
+};
 
-    return water;
-  };
+export const getWaterById = async (waterId, userId) => {
+  const water = await WaterCollection.findOne({
+    _id: waterId,
+    owner: userId,
+  });
 
+  if (!water) return null;
 
-  export const getWaterById = async (waterId, userId) => {
-    const water = await WaterCollection.findOne({
-      _id: waterId,
-      owner: userId,
-    });
+  return water;
+};
 
-    if (!water) return null;
+export const updateWaterById = async (
+  waterId,
+  userId,
+  payload,
+  options = {},
+) => {
+  const water = await getWaterById(waterId, userId);
 
-    return water;
-  };
+  if (!water) return null;
 
-  export const updateWaterById = async (
-    waterId,
-    userId,
-    payload,
-    options = {},
-  ) => {
-    const water = await getWaterById(waterId, userId);
+  const { amount = water.amount, date = water.date } = payload;
 
-    if (!water) return null;
+  const rawResult = await WaterCollection.findOneAndUpdate(
+    { _id: waterId, owner: userId },
+    { amount, date },
+    {
+      new: true,
+      includeResultMetadata: true,
+      ...options,
+    },
+  );
 
-    const {
-      amount = water.amount,
-      date = water.date,
-    } = payload;
+  if (!rawResult || !rawResult.value) return null;
 
+  return rawResult.value;
+};
 
-    const rawResult = await WaterCollection.findOneAndUpdate(
-      { _id: waterId, owner: userId },
-      { amount, date },
-      {
-        new: true,
-        includeResultMetadata: true,
-        ...options,
-      },
-    );
+export const deleteWaterById = async (waterId, userId) => {
+  const water = await WaterCollection.findOneAndDelete({
+    _id: waterId,
+    owner: userId,
+  });
 
-    if (!rawResult || !rawResult.value) return null;
+  if (!water) return null;
 
+  return water;
+};
 
-    return rawResult.value;
-  };
+export const getWaterPerDay = async ({ userId, date }) => {
+  const startOfDay = new Date(`${date}T00:00:00`).getTime();
+  const endOfDay = new Date(`${date}T23:59:59`).getTime();
 
-  export const deleteWaterById = async (waterId, userId) => {
-    const water = await WaterCollection.findOneAndDelete({
-      _id: waterId,
-      owner: userId,
-    });
+  const waterRecords = await WaterCollection.find({
+    owner: userId,
+    date: { $gte: startOfDay, $lt: endOfDay },
+  });
 
-    if (!water) return null;
-
-    return water;
-  };
+  return waterRecords;
+};
