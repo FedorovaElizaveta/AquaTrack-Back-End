@@ -6,7 +6,7 @@ export const createWater = async (payload) => {
 
     const water = await WaterCollection.create({
       amount,
-      date,
+      date: new Date(date),
       owner: userId,
     });
 
@@ -40,10 +40,12 @@ export const createWater = async (payload) => {
       date = water.date,
     } = payload;
 
+    const updatedDate = date ? new Date(date) : water.date;
+
 
     const rawResult = await WaterCollection.findOneAndUpdate(
       { _id: waterId, owner: userId },
-      { amount, date },
+      { amount, date: updatedDate },
       {
         new: true,
         includeResultMetadata: true,
