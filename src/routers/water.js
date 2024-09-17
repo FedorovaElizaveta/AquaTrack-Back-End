@@ -10,13 +10,10 @@ import {
 import { ctrlWrapper } from '../utilts/ctrlWrapper.js';
 import { isValidId } from '../middlewares/isValidId.js';
 import { validateBody } from '../middlewares/validateBody.js';
-import {
-  createWaterSchema,
-  // getWaterPerDay,
-  updateWaterSchema,
-} from '../validation/water.js';
+
+import { createWaterSchema, updateWaterSchema } from '../validation/water.js';
 import { auth } from '../middlewares/auth.js';
-import { isValidDate } from '../middlewares/isValidDate.js';
+import { isValidDate } from '../validation/isValidDate.js';
 
 const router = express.Router();
 const jsonParser = express.json();

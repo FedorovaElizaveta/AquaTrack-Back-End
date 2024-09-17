@@ -5,7 +5,7 @@ export const createWater = async (payload) => {
 
   const water = await WaterCollection.create({
     amount,
-    date,
+    date: new Date(date),
     owner: userId,
   });
 
@@ -35,9 +35,11 @@ export const updateWaterById = async (
 
   const { amount = water.amount, date = water.date } = payload;
 
+  const updatedDate = date ? new Date(date) : water.date;
+
   const rawResult = await WaterCollection.findOneAndUpdate(
     { _id: waterId, owner: userId },
-    { amount, date },
+    { amount, date: updatedDate },
     {
       new: true,
       includeResultMetadata: true,
@@ -62,8 +64,12 @@ export const deleteWaterById = async (waterId, userId) => {
 };
 
 export const getWaterPerDay = async ({ userId, date }) => {
-  const startOfDay = new Date(`${date}T00:00:00`).getTime();
-  const endOfDay = new Date(`${date}T23:59:59`).getTime();
+  const startOfDay = new Date(`${date}T00:00:00Z`);
+  const endOfDay = new Date(`${date}T23:59:59Z`);
+
+  console.log(date);
+  console.log(startOfDay);
+  console.log(endOfDay);
 
   const waterRecords = await WaterCollection.find({
     owner: userId,
