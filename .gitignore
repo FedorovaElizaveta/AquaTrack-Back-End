@@ -1,13 +1,7 @@
 /node_modules
-
 .env
 .env.local
-
 .vscode
 .DS_Store
 .idea
-node_modules
-node_modules
-node_modules
-
 pullrequest-list.txt
