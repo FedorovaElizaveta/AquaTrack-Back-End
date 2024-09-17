@@ -6,12 +6,14 @@ import router from './routers/index.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import cookieParser from 'cookie-parser';
-import authRouter from './routers/auth.js';
+import path from 'node:path';
 
 const PORT = Number(env('PORT', '5108'));
 
 export const setupServer = () => {
   const app = express();
+
+  app.use('/avatars', express.static(path.resolve('src/public/avatars')));
 
   app.use(cors());
   app.use(express.json());
@@ -25,8 +27,6 @@ export const setupServer = () => {
   );
 
   app.use(router);
-
-  app.use('/auth', authRouter); // for login/logout/register
 
   app.use('*', notFoundHandler);
 

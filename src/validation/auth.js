@@ -12,7 +12,7 @@ export const patchUserSchema = Joi.object({
   weight: Joi.number(),
   sportTime: Joi.number(),
   dailyWater: Joi.number(),
-  // avatar: Joi.any().optional(),
+  avatar: Joi.any().optional(),
 });
 
 export const loginWithGoogleOAuthSchema = Joi.object({
