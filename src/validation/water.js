@@ -7,7 +7,6 @@ export const createWaterSchema = Joi.object({
     'any.required': 'The amount of water is mandatory for filling.',
   }),
   date: Joi.date().iso().required().example('YYYY-MM-DD').messages({
-    'string.base': 'The date should be a line.',
     'any.required': 'The date is required to be filled in.',
   }),
   norm: Joi.number().example(1.8).messages({
@@ -21,7 +20,6 @@ export const updateWaterSchema = Joi.object({
     'number.integer': 'The amount of water should be a whole number.',
   }),
   date: Joi.date().iso().required().example('YYYY-MM-DD').messages({
-    'string.base': 'The date should be a line.',
     'any.required': 'The date is required to be filled in.',
   }),
   norm: Joi.number().example(1.8).messages({
