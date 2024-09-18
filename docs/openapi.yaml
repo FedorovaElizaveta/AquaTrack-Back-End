@@ -1,0 +1,47 @@
+openapi: 3.1.0
+info:
+  version: 1.0.0
+  title: Aquatrack app
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  description: This is a documentation of Aquatrack app
+tags:
+  - name: Water
+    description: Operations about water.
+  - name: Auth
+    description: Auth operations.
+servers:
+  - url: https://aquatrack-back-end.onrender.com
+paths:
+  /users/register:
+    post:
+      $ref: ../swagger/paths/users/register.yaml
+  /users/login:
+    post:
+      $ref: ../swagger/paths/users/login.yaml
+  /users/logout:
+    post:
+      $ref: ../swagger/paths/users/logout.yaml
+  /users/info:
+    get:
+      $ref: ../swagger/paths/users/getUserInfo.yaml
+  /users/profile:
+    patch:
+      $ref: ../swagger/paths/users/patchUser.yaml
+  /users/refresh:
+    post:
+      $ref: ../swagger/paths/users/refresSession.yaml
+  /water/{id}:
+    patch:
+      $ref: ../swagger/paths/water/{id}/patchWater.yaml
+    delete:
+      $ref: ../swagger/paths/water/{id}/deleteWater.yaml
+  /water:
+    post:
+      $ref: ../swagger/paths/water/postWater.yaml
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

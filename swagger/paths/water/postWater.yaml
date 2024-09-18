@@ -1,0 +1,48 @@
+tags:
+  - Water
+summary: Create a water record
+operationId: postWater
+description: 'Use this endpoint to create a record of water intake'
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - amount
+          - date
+        properties:
+          amount:
+            description: 'Amount of water consumed, in milliliters'
+            type: number
+            example: 250
+          date:
+            description: 'Timestamp when the water was consumed. Format: ISO 8601'
+            type: string
+            format: date-time
+            example: '2024-09-17T12:00:00Z'
+responses:
+  '201':
+    description: 'Successfully created a water record'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: 'Successfully created a water record!'
+            data:
+              type: object
+              $ref: ../../components/schemas/water.yaml
+  '401':
+    $ref: ../../components/responses/401.yaml

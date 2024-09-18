@@ -1,0 +1,39 @@
+tags:
+  - Water
+summary: Delete a water record
+operationId: deleteWater
+description: 'Use this endpoint to delete a water record'
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: id
+    required: true
+    schema:
+      type: string
+      example: '66d7a677430b976ad90d5d34'
+responses:
+  '204':
+    description: 'Successfully deleted the water record'
+  '401':
+    $ref: ../../../components/responses/401.yaml
+  '404':
+    description: 'Successfully deleted the water record'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 404
+            message:
+              type: string
+              example: 'Water record not found'
+            data:
+              type: object
+              example: {}
