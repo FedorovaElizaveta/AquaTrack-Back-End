@@ -100,8 +100,6 @@ export const patchUserController = async (req, res, next) => {
     return;
   }
 
-  console.log(patchedUser);
-
   res.status(200).json({
     status: 200,
     message: 'Successfully patched a user!',
