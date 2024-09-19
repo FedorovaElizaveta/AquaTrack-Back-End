@@ -16,6 +16,7 @@ export async function registerUserController(req, res) {
   const payload = {
     email: req.body.email,
     password: req.body.password,
+    name: req.body.email.split('@')[0],
   };
   const registeredUser = await registerUser(payload);
   res.status(201).json({
