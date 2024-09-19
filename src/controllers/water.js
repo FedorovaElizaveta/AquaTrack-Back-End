@@ -6,6 +6,7 @@ import {
   updateWaterById,
   deleteWaterById,
   getWaterPerDay,
+  getWaterPerMonth,
 } from '../services/water.js';
 
 export const createWaterController = async (req, res) => {
@@ -79,6 +80,27 @@ export const getWaterPerDayController = async (req, res, next) => {
   const { date } = req.params;
 
   const water = await getWaterPerDay({
+    userId,
+    date,
+  });
+
+  if (!water || water.length === 0) {
+    next(createHttpError(404, 'Water not found'));
+    return;
+  }
+
+  res.status(200).json({
+    status: '200',
+    message: 'Successfully found a water',
+    data: water,
+  });
+};
+
+export const getWaterPerMonthController = async (req, res, next) => {
+  const userId = req.user._id;
+  const { date } = req.params;
+
+  const water = await getWaterPerMonth({
     userId,
     date,
   });

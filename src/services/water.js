@@ -67,14 +67,40 @@ export const getWaterPerDay = async ({ userId, date }) => {
   const startOfDay = new Date(`${date}T00:00:00Z`);
   const endOfDay = new Date(`${date}T23:59:59Z`);
 
-  console.log(date);
-  console.log(startOfDay);
-  console.log(endOfDay);
-
   const waterRecords = await WaterCollection.find({
     owner: userId,
     date: { $gte: startOfDay, $lt: endOfDay },
   });
 
   return waterRecords;
+};
+
+export const getWaterPerMonth = async ({ userId, date }) => {
+  const startOfMonth = new Date(`${date}-01T00:00:00Z`);
+  const endOfMonth = new Date(startOfMonth);
+  endOfMonth.setMonth(endOfMonth.getMonth() + 1);
+
+  const waterRecords = await WaterCollection.find({
+    owner: userId,
+    date: { $gte: startOfMonth, $lt: endOfMonth },
+  });
+
+  const dailyWater = {};
+
+  waterRecords.forEach((record) => {
+    const recordDate = new Date(record.date);
+    const day = recordDate.getUTCDate();
+
+    if (!dailyWater[day]) {
+      dailyWater[day] = 0;
+    }
+
+    dailyWater[day] += record.amount;
+  });
+
+  const result = Object.keys(dailyWater).map((day) => ({
+    [day]: dailyWater[day] || 0,
+  }));
+
+  return result;
 };
