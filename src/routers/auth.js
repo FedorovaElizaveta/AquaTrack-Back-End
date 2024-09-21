@@ -10,6 +10,7 @@ import {
   refreshTokensController,
   patchUserController,
   getUserInfoController,
+  getAllUsersController,
 } from '../controllers/auth.js';
 import {
   registerLoginUserSchema,
@@ -49,5 +50,7 @@ router.patch(
 );
 
 router.get('/info', auth, ctrlWrapper(getUserInfoController));
+
+router.get('/all-users', ctrlWrapper(getAllUsersController));
 
 export default router;

@@ -85,3 +85,8 @@ export const getUserInfoService = async (id) => {
   const user = await User.findById(id);
   return user;
 };
+
+export const getAllUsers = async () => {
+  const users = await User.countDocuments();
+  return users;
+};

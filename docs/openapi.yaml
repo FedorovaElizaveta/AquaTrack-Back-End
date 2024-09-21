@@ -32,6 +32,9 @@ paths:
   /users/refresh:
     post:
       $ref: ../swagger/paths/users/refresSession.yaml
+  /users/all-users:
+    get:
+      $ref: ../swagger/paths/users/getAllUsers.yaml
   /water/{id}:
     patch:
       $ref: ../swagger/paths/water/{id}/patchWater.yaml
