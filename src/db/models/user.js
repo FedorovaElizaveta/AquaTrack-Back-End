@@ -30,7 +30,7 @@ const userSchema = new Schema(
     },
     dailyWater: {
       type: Number,
-      default: 1.5,
+      default: 1500,
     },
     avatar: {
       type: String,
