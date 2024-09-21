@@ -40,6 +40,12 @@ paths:
   /water:
     post:
       $ref: ../swagger/paths/water/postWater.yaml
+  /water/per-day/{date}:
+    get:
+      $ref: ../swagger/paths/water/{date}/getDay.yaml
+  /water/per-month/{date}:
+    get:
+      $ref: ../swagger/paths/water/{date}/getMonth.yaml
 components:
   securitySchemes:
     bearerAuth:
