@@ -10,6 +10,7 @@ import { User } from '../db/models/user.js';
 import { createSession } from '../utilts/createSession.js';
 import { sendMail } from '../utilts/sendEmail.js';
 import { SMTP } from '../constants/index.js';
+import { env } from '../utilts/env.js';
 
 export async function registerUser(payload) {
   const maybeUser = await User.findOne({ email: payload.email });
@@ -104,7 +105,7 @@ export const sendResetEmail = async (email) => {
       sub: user._id,
       email: user.email,
     },
-    process.env.JWT_SECRET,
+    env('JWT_SECRET'),
     { expiresIn: '15m' }, //15 min
   );
 
@@ -136,7 +137,7 @@ export const sendResetEmail = async (email) => {
 export async function resetPassword(password, token) {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    console.log('decoded >> ', decoded);
+
     const user = await User.findOne({ _id: decoded.sub, email: decoded.email });
 
     if (!user) {
@@ -147,9 +148,10 @@ export async function resetPassword(password, token) {
       { _id: user._id },
       { password: hashedPassword },
     );
+    await Session.findOneAndDelete({ userId: user._id });
   } catch (error) {
     if (
-      error.name === 'TokenExpireError' ||
+      error.name === 'TokenExpiredError' ||
       error.name === 'JsonWebTokenError'
     ) {
       throw createHttpError(401, 'Token is expired or invalid');
