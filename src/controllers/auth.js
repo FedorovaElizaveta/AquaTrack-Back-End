@@ -8,6 +8,7 @@ import {
   refreshTokens,
   patchUser,
   getUserInfoService,
+  getAllUsers,
 } from '../services/auth.js';
 
 import { setupCookie } from '../utilts/setupCookie.js';
@@ -120,5 +121,19 @@ export const getUserInfoController = async (req, res) => {
   res.json({
     status: 200,
     data: userInfo,
+  });
+};
+
+export const getAllUsersController = async (req, res) => {
+  const users = await getAllUsers();
+
+  if (!users) {
+    throw createHttpError(404, 'Users not found');
+  }
+
+  res.json({
+    status: 200,
+    message: 'Successfully found users',
+    data: users,
   });
 };
