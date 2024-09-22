@@ -10,9 +10,11 @@ import {
   getUserInfoService,
   sendResetEmail,
   resetPassword,
+  getAllUsers,
 } from '../services/auth.js';
-
 import { setupCookie } from '../utilts/setupCookie.js';
+import { uploadToCloudinary } from '../utilts/uploadToCloudinary.js';
+import { env } from '../utilts/env.js';
 
 export async function registerUserController(req, res) {
   const payload = {
@@ -76,12 +78,19 @@ export const patchUserController = async (req, res, next) => {
   let avatar = null;
 
   if (typeof req.file !== 'undefined') {
-    await fs.rename(
-      req.file.path,
-      path.resolve('src/public/avatars', req.file.filename),
-    );
+    if (env('ENABLE_CLOUDINARY') === 'true') {
+      const result = await uploadToCloudinary(req.file.path);
+      await fs.unlink(req.file.path);
 
-    avatar = `http://localhost:5108/avatars/${req.file.filename}`;
+      avatar = result.secure_url;
+    } else {
+      await fs.rename(
+        req.file.path,
+        path.resolve('src/public/avatars', req.file.filename),
+      );
+
+      avatar = `http://localhost:5108/avatars/${req.file.filename}`;
+    }
   }
 
   const userId = req.user._id;
@@ -144,5 +153,19 @@ export const resetPasswordController = async (req, res) => {
     status: 200,
     message: 'Password has been successfully reset',
     data: {},
+  });
+};
+
+export const getAllUsersController = async (req, res) => {
+  const users = await getAllUsers();
+
+  if (!users) {
+    throw createHttpError(404, 'Users not found');
+  }
+
+  res.json({
+    status: 200,
+    message: 'Successfully found users',
+    data: users,
   });
 };

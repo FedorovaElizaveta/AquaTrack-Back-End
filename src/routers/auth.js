@@ -12,6 +12,7 @@ import {
   getUserInfoController,
   sendResetEmailController,
   resetPasswordController,
+  getAllUsersController,
 } from '../controllers/auth.js';
 import {
   registerLoginUserSchema,
@@ -67,5 +68,7 @@ router.post(
   validateBody(resetPasswordSchema),
   ctrlWrapper(resetPasswordController),
 );
+
+router.get('/all-users', ctrlWrapper(getAllUsersController));
 
 export default router;

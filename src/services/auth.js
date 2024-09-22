@@ -161,3 +161,8 @@ export async function resetPassword(password, token) {
 
   console.log({ password, token });
 }
+
+export const getAllUsers = async () => {
+  const users = await User.countDocuments();
+  return users;
+};
