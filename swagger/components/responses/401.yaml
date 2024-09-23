@@ -21,4 +21,4 @@ content:
           properties:
             message:
               type: string
-              example: 'Session not found or refresh token is expired'
+              example: 'Session not found or refresh token is expired or invalid.'

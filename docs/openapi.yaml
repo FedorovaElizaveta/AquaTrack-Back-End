@@ -35,6 +35,12 @@ paths:
   /users/all-users:
     get:
       $ref: ../swagger/paths/users/getAllUsers.yaml
+  /users/send-reset-email:
+    post:
+      $ref: ../swagger/paths/users/postSendResetEmail.yaml
+  /users/reset-pwd:
+    post:
+      $ref: ../swagger/paths/users/postResetPwd.yaml
   /water/{id}:
     get:
       $ref: ../swagger/paths/water/{id}/getWaterById.yaml
