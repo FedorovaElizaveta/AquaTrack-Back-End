@@ -17,11 +17,11 @@
   "tags": [
     {
       "name": "Water",
-      "description": "Operations about water."
+      "description": "Operations related to water records."
     },
     {
       "name": "Auth",
-      "description": "Auth operations."
+      "description": "Authentication operations."
     }
   ],
   "paths": {
@@ -93,6 +93,9 @@
           },
           "409": {
             "$ref": "#/components/responses/409"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -175,33 +178,10 @@
             "$ref": "#/components/responses/401"
           },
           "404": {
-            "description": "User not found. Returns status code and error information.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 404
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "User not found"
-                    },
-                    "data": {
-                      "type": "object",
-                      "example": {}
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -221,6 +201,9 @@
           },
           "401": {
             "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -272,33 +255,10 @@
             "$ref": "#/components/responses/401"
           },
           "404": {
-            "description": "User not found. Returns status code and error information.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 404
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "User not found"
-                    },
-                    "data": {
-                      "type": "object",
-                      "example": {}
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -402,38 +362,10 @@
             "$ref": "#/components/responses/401"
           },
           "404": {
-            "description": "User or session not found. Returns status code and error information.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 404
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "User or session not found"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "message": {
-                          "type": "string",
-                          "example": "User not found"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -535,6 +467,9 @@
                 }
               }
             }
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -579,41 +514,10 @@
             }
           },
           "404": {
-            "description": "Users not found. Returns status code and error information.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 404
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Not found error"
-                    },
-                    "data": {
-                      "type": "object",
-                      "required": [
-                        "message"
-                      ],
-                      "properties": {
-                        "message": {
-                          "type": "string",
-                          "example": "Users not found"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -625,12 +529,8 @@
         ],
         "summary": "Send Email",
         "operationId": "sendEmail",
-        "description": "Send email for reset password",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "description": "Send email for reset password.",
+        "security": [],
         "requestBody": {
           "content": {
             "application/json": {
@@ -641,7 +541,7 @@
                 ],
                 "properties": {
                   "email": {
-                    "description": "User's email",
+                    "description": "User's email. It must be a valid email format.",
                     "type": "string",
                     "example": "johndoe@gmail.com"
                   }
@@ -652,7 +552,7 @@
         },
         "responses": {
           "200": {
-            "description": "Send email for reset",
+            "description": "Successfully send email for reset. Returns a status code, a success message and user information.",
             "content": {
               "application/json": {
                 "schema": {
@@ -696,12 +596,8 @@
         ],
         "summary": "Reset password",
         "operationId": "resetPassword",
-        "description": "Reset Password after received email",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "description": "Reset Password after received email.",
+        "security": [],
         "requestBody": {
           "content": {
             "application/json": {
@@ -713,12 +609,12 @@
                 ],
                 "properties": {
                   "password": {
-                    "description": "New reset password",
+                    "description": "New user's password must be between 6 and 30 characters long and cannot be empty.",
                     "type": "string",
                     "example": "password123"
                   },
                   "token": {
-                    "description": "Token from brevo-email",
+                    "description": "The reset token received from the Brevo email.",
                     "type": "string",
                     "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NmM2Mzg4NmQxODBhZWFmMDA0Mjc5MjkiLCJlbWFpbCI6ImlycG9sZ0B1a3IubmV0IiwiaWF0IjoxNzI1MDQ2Nzc1LCJleHAiOjE3MjUwNDcwNzV9.bpKD50jiRqn9NqaTOByuxvbwWZP8UWFMYs2daRGb7Dw"
                   }
@@ -729,7 +625,7 @@
         },
         "responses": {
           "200": {
-            "description": "Reset password for user",
+            "description": "Password has been successfully reset. Returns a status code, a success message and user information.",
             "content": {
               "application/json": {
                 "schema": {
@@ -758,7 +654,29 @@
             }
           },
           "401": {
-            "description": "Unauthorized error",
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/users/oauth-url": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Get Google OAuth url",
+        "operationId": "getGoogleOauthUrl",
+        "description": "Retrieve the Google OAuth URL for authentication.",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the Google OAuth URL. Returns a status code, a success message, and the OAuth URL.",
             "content": {
               "application/json": {
                 "schema": {
@@ -771,21 +689,22 @@
                   "properties": {
                     "status": {
                       "type": "integer",
-                      "example": 401
+                      "example": 200
                     },
                     "message": {
                       "type": "string",
-                      "example": "UnauthorizedError"
+                      "example": "Successfully get Google OAuth url!"
                     },
                     "data": {
                       "type": "object",
                       "required": [
-                        "message"
+                        "url"
                       ],
                       "properties": {
-                        "message": {
+                        "url": {
+                          "description": "The Google OAuth URL for the user to authenticate.",
                           "type": "string",
-                          "example": "Token is expired or invalid"
+                          "example": "https://accounts.google.com/o/oauth2/v2/auth?client_id=xyz&redirect_uri=abc"
                         }
                       }
                     }
@@ -794,8 +713,61 @@
               }
             }
           },
-          "404": {
-            "$ref": "#/components/responses/404"
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/users/confirm-oauth": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Confirm Google OAuth URL",
+        "operationId": "confirmGoogleOauthUrl",
+        "description": "Confirm the Google OAuth URL for authentication.",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Successfully confirmed the Google OAuth URL. Returns a status code, a success message, and the OAuth URL.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully logged in via Google OAuth!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "accessToken"
+                      ],
+                      "properties": {
+                        "accessToken": {
+                          "type": "string",
+                          "example": "5Rb8g9eKeZtQJQWqdFkfr3XRMmkl1oiLku39SQhJ"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -860,41 +832,10 @@
             "$ref": "#/components/responses/401"
           },
           "404": {
-            "description": "Water record not found. Returns status code and error information.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 404
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "NotFoundError"
-                    },
-                    "data": {
-                      "type": "object",
-                      "required": [
-                        "message"
-                      ],
-                      "properties": {
-                        "message": {
-                          "type": "string",
-                          "example": "Water record not found"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/water404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
           }
         }
       },
@@ -977,33 +918,10 @@
             "$ref": "#/components/responses/401"
           },
           "404": {
-            "description": "Water record not found. Returns status code and error information.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 404
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Water record not found."
-                    },
-                    "data": {
-                      "type": "object",
-                      "example": {}
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/water404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
           }
         }
       },
@@ -1038,33 +956,10 @@
             "$ref": "#/components/responses/401"
           },
           "404": {
-            "description": "Water record not found. Returns status code and error information.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 404
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Water record not found."
-                    },
-                    "data": {
-                      "type": "object",
-                      "example": {}
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/water404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -1140,6 +1035,9 @@
           },
           "401": {
             "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -1242,41 +1140,10 @@
             "$ref": "#/components/responses/401"
           },
           "404": {
-            "description": "Water records not found. Returns status code and error information.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 404
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "NotFoundError"
-                    },
-                    "data": {
-                      "type": "object",
-                      "required": [
-                        "message"
-                      ],
-                      "properties": {
-                        "message": {
-                          "type": "string",
-                          "example": "Water records not found"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/water404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -1385,41 +1252,10 @@
             "$ref": "#/components/responses/401"
           },
           "404": {
-            "description": "Water records not found. Returns status code and error information.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 404
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "NotFoundError"
-                    },
-                    "data": {
-                      "type": "object",
-                      "required": [
-                        "message"
-                      ],
-                      "properties": {
-                        "message": {
-                          "type": "string",
-                          "example": "Water records not found"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/water404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -1556,7 +1392,7 @@
                   "properties": {
                     "message": {
                       "type": "string",
-                      "example": "Session not found or refresh token is expired"
+                      "example": "Session not found or refresh token is expired or invalid."
                     }
                   }
                 }
@@ -1632,7 +1468,50 @@
         }
       },
       "500": {
-        "description": "Internal server error",
+        "components": {
+          "responses": {
+            "InternalServerError": {
+              "description": "Internal server error. Returns status code and error information.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "required": [
+                      "status",
+                      "message",
+                      "data"
+                    ],
+                    "properties": {
+                      "status": {
+                        "type": "integer",
+                        "example": 500
+                      },
+                      "message": {
+                        "type": "string",
+                        "example": "InternalServerError"
+                      },
+                      "data": {
+                        "type": "object",
+                        "required": [
+                          "message"
+                        ],
+                        "properties": {
+                          "message": {
+                            "type": "string",
+                            "example": "Something went wrong, please try again later."
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "water404": {
+        "description": "Water record not found. Returns status code and error information.",
         "content": {
           "application/json": {
             "schema": {
@@ -1645,11 +1524,11 @@
               "properties": {
                 "status": {
                   "type": "integer",
-                  "example": 500
+                  "example": 404
                 },
                 "message": {
                   "type": "string",
-                  "example": "InternalServerError"
+                  "example": "NotFoundError"
                 },
                 "data": {
                   "type": "object",
@@ -1659,7 +1538,7 @@
                   "properties": {
                     "message": {
                       "type": "string",
-                      "example": "Failed to send the email, please try again later"
+                      "example": "Water record not found"
                     }
                   }
                 }

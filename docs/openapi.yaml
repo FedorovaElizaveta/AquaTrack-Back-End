@@ -8,9 +8,9 @@ info:
   description: This is a documentation of Aquatrack app
 tags:
   - name: Water
-    description: Operations about water.
+    description: Operations related to water records.
   - name: Auth
-    description: Auth operations.
+    description: Authentication operations.
 servers:
   - url: https://aquatrack-back-end.onrender.com
 paths:
@@ -44,7 +44,7 @@ paths:
   /users/oauth-url:
     get:
       $ref: ../swagger/paths/users/getOauthUrl.yaml
-  /users/reset-pwd:
+  /users/confirm-oauth:
     post:
       $ref: ../swagger/paths/users/confirmOauth.yaml
   /water/{id}:
