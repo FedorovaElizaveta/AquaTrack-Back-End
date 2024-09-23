@@ -11,6 +11,16 @@ import { createSession } from '../utilts/createSession.js';
 import { sendMail } from '../utilts/sendEmail.js';
 import { SMTP } from '../constants/index.js';
 import { env } from '../utilts/env.js';
+import {
+  validateCode,
+  getFullNameFromGoogleTokenPayload,
+} from '../utilts/googleOAuth2.js';
+import { getRandomPassword } from '../utilts/password.js';
+import { getSessionService } from './authSessionService.js';
+import {
+  createAuthUserService,
+  getAuthUserByEmail,
+} from './authUserService.js';
 
 export async function registerUser(payload) {
   const maybeUser = await User.findOne({ email: payload.email });
@@ -106,7 +116,7 @@ export const sendResetEmail = async (email) => {
       email: user.email,
     },
     env('JWT_SECRET'),
-    { expiresIn: '15m' }, //15 min
+    { expiresIn: '15m' },
   );
 
   const templateSource = fs.readFileSync(
@@ -125,8 +135,7 @@ export const sendResetEmail = async (email) => {
       subject: 'Reset your password',
       html,
     });
-  } catch (error) {
-    console.log('error >> ', error);
+  } catch {
     throw createHttpError(
       500,
       'Failed to send the email, please try again later',
@@ -158,11 +167,30 @@ export async function resetPassword(password, token) {
     }
     throw error;
   }
-
-  console.log({ password, token });
 }
 
 export const getAllUsers = async () => {
   const users = await User.countDocuments();
   return users;
+};
+
+export const loginOrSignupWithGoogle = async (code) => {
+  const loginTicket = await validateCode(code);
+  const payload = loginTicket.getPayload();
+  if (!payload) throw createHttpError(401);
+
+  const { email } = payload;
+
+  let authUser = await getAuthUserByEmail(email);
+  if (!authUser) {
+    const password = await getRandomPassword();
+
+    authUser = await createAuthUserService({
+      name: getFullNameFromGoogleTokenPayload(payload),
+      email: payload.email,
+      password,
+    });
+  }
+  const session = await getSessionService(authUser);
+  return session;
 };

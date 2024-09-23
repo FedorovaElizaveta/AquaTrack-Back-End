@@ -43,7 +43,7 @@ responses:
                   type: string
                   example: '5Rb8g9eKeZtQJQWqdFkfr3XRMmkl1oiLku39SQhJ'
   '401':
-    $ref: ../../components/responses/401.yaml
+    $ref: '../../components/responses/401.yaml'
   '404':
     description: 'Session not found. Returns status code and error information.'
     content:
@@ -64,3 +64,5 @@ responses:
             data:
               type: object
               example: {}
+  '500':
+    $ref: '../../components/responses/500.yaml'

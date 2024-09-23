@@ -11,10 +11,12 @@ import {
   sendResetEmail,
   resetPassword,
   getAllUsers,
+  loginOrSignupWithGoogle,
 } from '../services/auth.js';
 import { setupCookie } from '../utilts/setupCookie.js';
 import { uploadToCloudinary } from '../utilts/uploadToCloudinary.js';
 import { env } from '../utilts/env.js';
+import { generateAuthUrl } from '../utilts/googleOAuth2.js';
 
 export async function registerUserController(req, res) {
   const payload = {
@@ -168,5 +170,29 @@ export const getAllUsersController = async (req, res) => {
     status: 200,
     message: 'Successfully retrieved users count!',
     data: users,
+  });
+};
+
+export const getGoogleOAuthUrlController = async (req, res) => {
+  const url = generateAuthUrl();
+  res.json({
+    status: 200,
+    message: 'Successfully get Google OAuth url!',
+    data: {
+      url,
+    },
+  });
+};
+
+export const loginWithGoogleController = async (req, res) => {
+  const session = await loginOrSignupWithGoogle(req.body.code);
+  setupCookie(res, session);
+
+  res.json({
+    status: 200,
+    message: 'Successfully logged in via Google OAuth!',
+    data: {
+      accessToken: session.accessToken,
+    },
   });
 };

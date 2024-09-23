@@ -41,6 +41,12 @@ paths:
   /users/reset-pwd:
     post:
       $ref: ../swagger/paths/users/postResetPwd.yaml
+  /users/oauth-url:
+    get:
+      $ref: ../swagger/paths/users/getOauthUrl.yaml
+  /users/reset-pwd:
+    post:
+      $ref: ../swagger/paths/users/confirmOauth.yaml
   /water/{id}:
     get:
       $ref: ../swagger/paths/water/{id}/getWaterById.yaml
