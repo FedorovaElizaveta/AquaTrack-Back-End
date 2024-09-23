@@ -13,7 +13,7 @@ export const getGoogleOAuthUrlController = async (req, res) => {
   });
 };
 
-export const loginWithGoogleController = async (req, res, next) => {
+export const loginWithGoogleController = async (req, res) => {
   const session = await loginOrSignupWithGoogle(req.body.code);
   setupCookie(res, session);
 
