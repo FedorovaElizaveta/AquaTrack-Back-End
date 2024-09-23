@@ -1,0 +1,88 @@
+tags:
+  - Auth
+summary: Patch a user
+operationId: patchUser
+description: 'Use this endpoint to patch a user'
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        properties:
+          email:
+            description: "User's email"
+            type: string
+            example: 'johndoe@gmail.com'
+          name:
+            description: "User's name"
+            type: string
+            example: 'John Doe'
+          gender:
+            description: "User's gender"
+            type: string
+            enum: ['woman', 'man']
+            example: 'man'
+          weight:
+            description: "User's weight"
+            type: number
+            example: 56
+          sportTime:
+            description: "User's sport time"
+            type: number
+            example: 8
+          dailyWater:
+            description: "User's daily water intake"
+            type: number
+            example: 1.5
+          avatar:
+            description: "User's avatar"
+            type: string
+            format: binary
+            example: 'avatar.jpg'
+responses:
+  '200':
+    description: 'Successfully patched a user'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'Successfully patched a user!'
+            data:
+              $ref: ../../components/schemas/user.yaml
+  '401':
+    $ref: ../../components/responses/401.yaml
+  '404':
+    description: 'User or session not found'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 404
+            message:
+              type: string
+              example: 'User or session not found'
+            data:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: 'User not found'

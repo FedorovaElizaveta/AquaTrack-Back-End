@@ -8,14 +8,19 @@ import {
   refreshTokens,
   patchUser,
   getUserInfoService,
+  sendResetEmail,
+  resetPassword,
+  getAllUsers,
 } from '../services/auth.js';
-
 import { setupCookie } from '../utilts/setupCookie.js';
+import { uploadToCloudinary } from '../utilts/uploadToCloudinary.js';
+import { env } from '../utilts/env.js';
 
 export async function registerUserController(req, res) {
   const payload = {
     email: req.body.email,
     password: req.body.password,
+    name: req.body.email.split('@')[0],
   };
   const registeredUser = await registerUser(payload);
   res.status(201).json({
@@ -73,12 +78,19 @@ export const patchUserController = async (req, res, next) => {
   let avatar = null;
 
   if (typeof req.file !== 'undefined') {
-    await fs.rename(
-      req.file.path,
-      path.resolve('src/public/avatars', req.file.filename),
-    );
+    if (env('ENABLE_CLOUDINARY') === 'true') {
+      const result = await uploadToCloudinary(req.file.path);
+      await fs.unlink(req.file.path);
 
-    avatar = `http://localhost:5108/avatars/${req.file.filename}`;
+      avatar = result.secure_url;
+    } else {
+      await fs.rename(
+        req.file.path,
+        path.resolve('src/public/avatars', req.file.filename),
+      );
+
+      avatar = `http://localhost:5108/avatars/${req.file.filename}`;
+    }
   }
 
   const userId = req.user._id;
@@ -100,8 +112,6 @@ export const patchUserController = async (req, res, next) => {
     return;
   }
 
-  console.log(patchedUser);
-
   res.status(200).json({
     status: 200,
     message: 'Successfully patched a user!',
@@ -121,5 +131,41 @@ export const getUserInfoController = async (req, res) => {
   res.json({
     status: 200,
     data: userInfo,
+  });
+};
+
+export const sendResetEmailController = async (req, res) => {
+  const { email } = req.body;
+  await sendResetEmail(email);
+
+  res.send({
+    status: 200,
+    massage: 'Send email was send successfully!',
+    data: {},
+  });
+};
+
+export const resetPasswordController = async (req, res) => {
+  const { password, token } = req.body;
+  await resetPassword(password, token);
+
+  res.send({
+    status: 200,
+    message: 'Password has been successfully reset',
+    data: {},
+  });
+};
+
+export const getAllUsersController = async (req, res) => {
+  const users = await getAllUsers();
+
+  if (!users) {
+    throw createHttpError(404, 'Users not found');
+  }
+
+  res.json({
+    status: 200,
+    message: 'Successfully found users',
+    data: users,
   });
 };
