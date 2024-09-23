@@ -8,6 +8,8 @@ import {
   refreshTokens,
   patchUser,
   getUserInfoService,
+  sendResetEmail,
+  resetPassword,
   getAllUsers,
 } from '../services/auth.js';
 import { setupCookie } from '../utilts/setupCookie.js';
@@ -129,6 +131,28 @@ export const getUserInfoController = async (req, res) => {
   res.json({
     status: 200,
     data: userInfo,
+  });
+};
+
+export const sendResetEmailController = async (req, res) => {
+  const { email } = req.body;
+  await sendResetEmail(email);
+
+  res.send({
+    status: 200,
+    massage: 'Send email was send successfully!',
+    data: {},
+  });
+};
+
+export const resetPasswordController = async (req, res) => {
+  const { password, token } = req.body;
+  await resetPassword(password, token);
+
+  res.send({
+    status: 200,
+    message: 'Password has been successfully reset',
+    data: {},
   });
 };
 
