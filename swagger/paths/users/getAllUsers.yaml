@@ -2,11 +2,11 @@ tags:
   - Auth
 summary: Get users count
 operationId: getAllUsers
-description: 'Use this endpoint to count all users'
+description: 'Retrieve the total count of existing users in the system.'
 security: []
 responses:
   '200':
-    description: 'Get all users'
+    description: 'Successfully retrieved the count of all existing users. Returns a status code, a success message and user information.'
     content:
       application/json:
         schema:
@@ -21,12 +21,12 @@ responses:
               example: 200
             message:
               type: string
-              example: 'Successfully found users'
+              example: 'Successfully retrieved users count!'
             data:
               type: integer
               example: 50
   '404':
-    description: 'Not found error'
+    description: 'Users not found. Returns status code and error information.'
     content:
       application/json:
         schema:

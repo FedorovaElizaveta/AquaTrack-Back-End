@@ -2,7 +2,7 @@ tags:
   - Auth
 summary: Patch a user
 operationId: patchUser
-description: 'Use this endpoint to patch a user'
+description: 'Update user information. This endpoint requires the user to be logged in.'
 security:
   - bearerAuth: []
 requestBody:
@@ -12,38 +12,40 @@ requestBody:
         type: object
         properties:
           email:
-            description: "User's email"
+            description: "User's email. It must be a valid email format."
             type: string
             example: 'johndoe@gmail.com'
           name:
-            description: "User's name"
+            description: "User's name must be between 3 and 30 characters long and cannot be empty."
             type: string
+            minLength: 3
+            maxLength: 30
             example: 'John Doe'
           gender:
-            description: "User's gender"
+            description: "User's gender must be 'woman' or 'man'."
             type: string
             enum: ['woman', 'man']
             example: 'man'
           weight:
-            description: "User's weight"
+            description: "User's weight in kilograms. Default value is 0."
             type: number
-            example: 56
+            example: 50
           sportTime:
-            description: "User's sport time"
+            description: "User's weekly sport time in hours."
             type: number
             example: 8
           dailyWater:
-            description: "User's daily water intake"
+            description: "User's daily water intake in milliliters. Default value is 1500."
             type: number
-            example: 1.5
+            example: 1500
           avatar:
-            description: "User's avatar"
+            description: "User's avatar image file."
             type: string
             format: binary
             example: 'avatar.jpg'
 responses:
   '200':
-    description: 'Successfully patched a user'
+    description: 'User successfully patched. Returns a status code, a success message and user information.'
     content:
       application/json:
         schema:
@@ -64,7 +66,7 @@ responses:
   '401':
     $ref: ../../components/responses/401.yaml
   '404':
-    description: 'User or session not found'
+    description: 'User or session not found. Returns status code and error information.'
     content:
       application/json:
         schema:

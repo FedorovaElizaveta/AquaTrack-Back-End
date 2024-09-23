@@ -39,7 +39,7 @@ export async function loginUserController(req, res) {
 
   res.status(200).json({
     status: 200,
-    message: 'Successfully logged in an user!',
+    message: 'Successfully logged in a user!',
     data: {
       accessToken: session.accessToken,
     },
@@ -128,8 +128,9 @@ export const getUserInfoController = async (req, res) => {
     throw createHttpError(404, 'User not found');
   }
 
-  res.json({
+  res.status(200).json({
     status: 200,
+    message: 'Successfully retrieved user info!',
     data: userInfo,
   });
 };
@@ -163,9 +164,9 @@ export const getAllUsersController = async (req, res) => {
     throw createHttpError(404, 'Users not found');
   }
 
-  res.json({
+  res.status(200).json({
     status: 200,
-    message: 'Successfully found users',
+    message: 'Successfully retrieved users count!',
     data: users,
   });
 };

@@ -6,11 +6,11 @@ required:
   - owner
 properties:
   _id:
-    description: "Water record's id"
+    description: "Water record's unique ID created by the database."
     type: string
     example: '66d9b03111aaf046feebffeb'
   amount:
-    description: 'Amount of water consumed, in milliliters'
+    description: 'Amount of water consumed in milliliters'
     type: number
     example: 250
   date:
@@ -19,6 +19,6 @@ properties:
     format: date-time
     example: '2024-09-17T12:00:00Z'
   owner:
-    description: "Water record's owner"
+    description: 'Unique ID of the user who owns the water record.'
     type: string
     example: '66d7a529430b976ad90d5d05'

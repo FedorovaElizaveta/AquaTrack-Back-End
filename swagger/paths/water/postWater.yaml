@@ -2,7 +2,7 @@ tags:
   - Water
 summary: Create a water record
 operationId: postWater
-description: 'Use this endpoint to create a record of water intake'
+description: 'Create a record of water intake. This endpoint requires the user to be logged in.'
 security:
   - bearerAuth: []
 requestBody:
@@ -25,7 +25,7 @@ requestBody:
             example: '2024-09-17T12:00:00Z'
 responses:
   '201':
-    description: 'Successfully created a water record'
+    description: 'Successfully created a water record. Returns a status code, a success message and the record details.'
     content:
       application/json:
         schema:
