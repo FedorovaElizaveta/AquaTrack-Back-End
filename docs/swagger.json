@@ -766,6 +766,43 @@
               }
             }
           },
+          "400": {
+            "description": "Bad Request. The request is missing required fields or has invalid data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Bad Request"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "message"
+                      ],
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Invalid input data"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
           "500": {
             "$ref": "#/components/responses/500"
           }
@@ -1468,40 +1505,34 @@
         }
       },
       "500": {
-        "components": {
-          "responses": {
-            "InternalServerError": {
-              "description": "Internal server error. Returns status code and error information.",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "required": [
-                      "status",
-                      "message",
-                      "data"
-                    ],
-                    "properties": {
-                      "status": {
-                        "type": "integer",
-                        "example": 500
-                      },
-                      "message": {
-                        "type": "string",
-                        "example": "InternalServerError"
-                      },
-                      "data": {
-                        "type": "object",
-                        "required": [
-                          "message"
-                        ],
-                        "properties": {
-                          "message": {
-                            "type": "string",
-                            "example": "Something went wrong, please try again later."
-                          }
-                        }
-                      }
+        "description": "Internal server error. Returns status code and error information.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "InternalServerError"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Something went wrong, please try again later."
                     }
                   }
                 }
