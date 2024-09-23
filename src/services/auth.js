@@ -5,8 +5,8 @@ import handlebars from 'handlebars';
 
 import bcrypt from 'bcrypt';
 import createHttpError from 'http-errors';
-import { Session } from '../db/models/session.js';
 import { User } from '../db/models/user.js';
+import { Session } from '../db/models/session.js';
 import { createSession } from '../utilts/createSession.js';
 import { sendMail } from '../utilts/sendEmail.js';
 import { SMTP } from '../constants/index.js';

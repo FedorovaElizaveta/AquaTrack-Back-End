@@ -15,6 +15,10 @@ export const patchUserSchema = Joi.object({
   avatar: Joi.any().optional(),
 });
 
+export const loginWithGoogleOAuthSchema = Joi.object({
+  code: Joi.string().required(),
+});
+
 export const sendResetEmailSchema = Joi.object({
   email: Joi.string().email().required(),
 });

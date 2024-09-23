@@ -16,6 +16,7 @@ export const setupServer = () => {
   app.use('/avatars', express.static(path.resolve('src/public/avatars')));
 
   app.use(cors());
+  app.use(express.json());
   app.use(cookieParser());
   app.use(
     pino({
