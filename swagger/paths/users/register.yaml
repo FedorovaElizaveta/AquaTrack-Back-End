@@ -46,3 +46,5 @@ responses:
               $ref: ../../components/schemas/user.yaml
   '409':
     $ref: '../../components/responses/409.yaml'
+  '500':
+    $ref: '../../components/responses/500.yaml'

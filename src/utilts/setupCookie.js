@@ -1,4 +1,3 @@
-//for refresh & login
 export const setupCookie = (res, session) => {
   res.cookie('refreshToken', session.refreshToken, {
     httpOnly: true,

@@ -13,12 +13,15 @@ import {
   sendResetEmailController,
   resetPasswordController,
   getAllUsersController,
+  getGoogleOAuthUrlController,
+  loginWithGoogleController,
 } from '../controllers/auth.js';
 import {
   registerLoginUserSchema,
   patchUserSchema,
   sendResetEmailSchema,
   resetPasswordSchema,
+  loginWithGoogleOAuthSchema,
 } from '../validation/auth.js';
 import { auth } from '../middlewares/auth.js';
 import { upload } from '../middlewares/upload.js';
@@ -70,5 +73,13 @@ router.post(
 );
 
 router.get('/all-users', ctrlWrapper(getAllUsersController));
+
+router.get('/oauth-url', ctrlWrapper(getGoogleOAuthUrlController));
+
+router.post(
+  '/confirm-oauth',
+  validateBody(loginWithGoogleOAuthSchema),
+  ctrlWrapper(loginWithGoogleController),
+);
 
 export default router;

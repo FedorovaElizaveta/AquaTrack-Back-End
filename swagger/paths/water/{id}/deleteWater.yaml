@@ -16,24 +16,8 @@ responses:
   '204':
     description: 'Successfully deleted the water record. No content is returned.'
   '401':
-    $ref: ../../../components/responses/401.yaml
+    $ref: '../../../components/responses/401.yaml'
   '404':
-    description: 'Water record not found. Returns status code and error information.'
-    content:
-      application/json:
-        schema:
-          type: object
-          required:
-            - status
-            - message
-            - data
-          properties:
-            status:
-              type: integer
-              example: 404
-            message:
-              type: string
-              example: 'Water record not found.'
-            data:
-              type: object
-              example: {}
+    $ref: '../../../components/responses/water404.yaml'
+  '500':
+    $ref: '../../../components/responses/500.yaml'
