@@ -29,6 +29,7 @@ router.post(
   ctrlWrapper(createWaterController),
 );
 router.get('/:id', isValidId, ctrlWrapper(getWaterByIdController));
+
 router.patch(
   '/:id',
   jsonParser,

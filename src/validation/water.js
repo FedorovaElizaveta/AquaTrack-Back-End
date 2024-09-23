@@ -9,9 +9,6 @@ export const createWaterSchema = Joi.object({
   date: Joi.date().iso().required().example('YYYY-MM-DD').messages({
     'any.required': 'The date is required to be filled in.',
   }),
-  norm: Joi.number().example(1.8).messages({
-    'number.base': 'The norm should be a number.',
-  }),
 });
 
 export const updateWaterSchema = Joi.object({
@@ -21,9 +18,6 @@ export const updateWaterSchema = Joi.object({
   }),
   date: Joi.date().iso().required().example('YYYY-MM-DD').messages({
     'any.required': 'The date is required to be filled in.',
-  }),
-  norm: Joi.number().example(1.8).messages({
-    'number.base': 'The norm should be a number.',
   }),
 })
   .min(1)

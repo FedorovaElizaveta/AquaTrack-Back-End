@@ -1,4 +1,4 @@
-description: Unauthorized error
+description: 'Unauthorized error. Occurs when the user is not authenticated or the session has expired.'
 content:
   application/json:
     schema:

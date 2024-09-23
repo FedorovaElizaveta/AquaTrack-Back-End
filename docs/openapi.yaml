@@ -42,6 +42,8 @@ paths:
     post:
       $ref: ../swagger/paths/users/postResetPwd.yaml
   /water/{id}:
+    get:
+      $ref: ../swagger/paths/water/{id}/getWaterById.yaml
     patch:
       $ref: ../swagger/paths/water/{id}/patchWater.yaml
     delete:

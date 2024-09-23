@@ -2,12 +2,12 @@ tags:
   - Auth
 summary: Get user info
 operationId: getUserInfo
-description: 'Use this endpoint to get user info'
+description: 'Retrieve information about the authenticated user. This endpoint requires the user to be logged in.'
 security:
   - bearerAuth: []
 responses:
   '200':
-    description: 'Get user info'
+    description: 'Successfully retrieved user info. Returns a status code, a success message and user information.'
     content:
       application/json:
         schema:
@@ -22,7 +22,7 @@ responses:
               example: 200
             message:
               type: string
-              example: 'Successfully found user info!'
+              example: 'Successfully retrieved user info!'
             data:
               type: object
               $ref: ../../components/schemas/user.yaml

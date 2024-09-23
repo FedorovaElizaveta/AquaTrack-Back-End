@@ -2,7 +2,7 @@ tags:
   - Water
 summary: Delete a water record
 operationId: deleteWater
-description: 'Use this endpoint to delete a water record'
+description: 'Delete a water record. This endpoint requires the user to be logged in.'
 security:
   - bearerAuth: []
 parameters:
@@ -14,11 +14,11 @@ parameters:
       example: '66d7a677430b976ad90d5d34'
 responses:
   '204':
-    description: 'Successfully deleted the water record'
+    description: 'Successfully deleted the water record. No content is returned.'
   '401':
     $ref: ../../../components/responses/401.yaml
   '404':
-    description: 'Successfully deleted the water record'
+    description: 'Water record not found. Returns status code and error information.'
     content:
       application/json:
         schema:
@@ -33,7 +33,7 @@ responses:
               example: 404
             message:
               type: string
-              example: 'Water record not found'
+              example: 'Water record not found.'
             data:
               type: object
               example: {}

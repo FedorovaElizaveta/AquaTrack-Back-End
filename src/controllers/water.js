@@ -31,7 +31,7 @@ export const getWaterByIdController = async (req, res, next) => {
   const water = await getWaterById(id, userId);
 
   if (!water) {
-    next(createHttpError(404, 'Water not found'));
+    next(createHttpError(404, 'Water record not found'));
     return;
   }
 
@@ -56,7 +56,7 @@ export const updateWaterController = async (req, res, next) => {
 
   res.status(200).json({
     status: 200,
-    message: 'Successfully update a water!',
+    message: 'Successfully patched a water record!',
     data: result,
   });
 };
@@ -85,13 +85,13 @@ export const getWaterPerDayController = async (req, res, next) => {
   });
 
   if (!water || water.length === 0) {
-    next(createHttpError(404, 'Water not found'));
+    next(createHttpError(404, 'Water records not found'));
     return;
   }
 
   res.status(200).json({
     status: '200',
-    message: 'Successfully found a water',
+    message: 'Successfully found water records!',
     data: water,
   });
 };
@@ -106,13 +106,13 @@ export const getWaterPerMonthController = async (req, res, next) => {
   });
 
   if (!water || water.length === 0) {
-    next(createHttpError(404, 'Water not found'));
+    next(createHttpError(404, 'Water records not found'));
     return;
   }
 
   res.status(200).json({
     status: '200',
-    message: 'Successfully found a water',
+    message: 'Successfully found water records!',
     data: water,
   });
 };

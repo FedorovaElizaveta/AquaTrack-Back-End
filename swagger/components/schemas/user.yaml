@@ -6,39 +6,40 @@ required:
   - name
 properties:
   _id:
-    description: "User's id"
+    description: "User's unique ID created by the database."
     type: string
     example: '66d3da9d82c162e0b0d8435f'
   email:
-    description: "User's email"
+    description: "User's email. It must be a valid email format."
     type: string
     example: 'johndoe@gmail.com'
   password:
-    description: "User's password"
+    description: "User's password, must be between 6 and 30 characters long."
     type: string
     example: 'password123'
   name:
-    description: "User's name"
+    description: "User's name, must be between 3 and 30 characters long."
     type: string
     example: 'johndoe'
   gender:
-    description: "User's gender"
+    description: "User's gender, must be either 'woman' or 'man'."
     type: string
     enum: ['woman', 'man']
     example: 'man'
   weight:
-    description: "User's weight in kilograms"
+    description: "User's weight in kilograms. Default value is 0."
     type: number
     example: 60
   sportTime:
-    description: "User's sport time in hours"
+    description: "User's weekly sport time in hours. Default value is 0."
     type: number
     example: 8
   dailyWater:
-    description: "User's daily water intake in liters"
+    description: "User's daily water intake in milliliters. Default value is 1500."
     type: number
-    example: 1.5
+    example: 1500
   avatar:
-    description: "User's avatar"
+    description: "URL to the user's avatar image stored in Cloudinary."
     type: string
     format: binary
+    example: 'https://cloudinary.com/images/avatar123.jpg'

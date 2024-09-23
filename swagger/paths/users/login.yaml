@@ -2,9 +2,8 @@ tags:
   - Auth
 summary: Login user
 operationId: loginUser
-description: 'Login an user'
-security:
-  - bearerAuth: []
+description: 'Login a user with their email and password.'
+security: []
 requestBody:
   content:
     application/json:
@@ -15,16 +14,18 @@ requestBody:
           - password
         properties:
           email:
-            description: "User's email"
+            description: "User's email. It must be a valid email format."
             type: string
             example: 'johndoe@gmail.com'
           password:
-            description: "User's password"
+            description: "User's password must be between 6 and 30 characters long and cannot be empty."
             type: string
+            minLength: 6
+            maxLength: 30
             example: 'password123'
 responses:
   '200':
-    description: 'Login user'
+    description: 'User successfully logged in. Returns a status code, a success message and user information.'
     content:
       application/json:
         schema:
@@ -39,7 +40,7 @@ responses:
               example: 200
             message:
               type: string
-              example: 'Successfully logged in an user!'
+              example: 'Successfully logged in a user!'
             data:
               type: object
               required:
@@ -52,3 +53,4 @@ responses:
     $ref: ../../components/responses/401.yaml
   '404':
     $ref: ../../components/responses/404.yaml
+
