@@ -30,5 +30,30 @@ responses:
                 accessToken:
                   type: string
                   example: '5Rb8g9eKeZtQJQWqdFkfr3XRMmkl1oiLku39SQhJ'
+  '400':
+    description: 'Bad Request. The request is missing required fields or has invalid data.'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 400
+            message:
+              type: string
+              example: 'Bad Request'
+            data:
+              type: object
+              required:
+                - message
+              properties:
+                message:
+                  type: string
+                  example: 'Invalid input data'
   '500':
     $ref: '../../components/responses/500.yaml'
