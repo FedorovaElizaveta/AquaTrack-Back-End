@@ -1,4 +1,4 @@
-description: 'Register error - Email in use'
+description: 'Register error - Email in use. Occurs when a user tries to register with an email that is already registered.'
 content:
   application/json:
     schema:

@@ -36,6 +36,8 @@ paths:
     get:
       $ref: ../swagger/paths/users/getAllUsers.yaml
   /water/{id}:
+    get:
+      $ref: ../swagger/paths/water/{id}/getWaterById.yaml
     patch:
       $ref: ../swagger/paths/water/{id}/patchWater.yaml
     delete:

@@ -2,9 +2,8 @@ tags:
   - Auth
 summary: refresh session
 operationId: refreshSession
-description: 'Use this endpoint to refresh a session'
-security:
-  - bearerAuth: []
+description: 'Refresh an existing session using a valid refresh token.'
+security: []
 requestBody:
   content:
     application/json:
@@ -15,11 +14,11 @@ requestBody:
         properties:
           refreshToken:
             type: string
-            description: 'Refresh token for refreshing the session'
+            description: 'Refresh token for refreshing the session.'
             example: 'abcdef123456'
 responses:
   '200':
-    description: 'Successfully refreshed a session'
+    description: 'Successfully refreshed the session. Returns a status code, a success message and user information.'
     content:
       application/json:
         schema:
@@ -46,7 +45,7 @@ responses:
   '401':
     $ref: ../../components/responses/401.yaml
   '404':
-    description: 'Session not found'
+    description: 'Session not found. Returns status code and error information.'
     content:
       application/json:
         schema:

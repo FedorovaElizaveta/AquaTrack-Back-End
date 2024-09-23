@@ -2,11 +2,10 @@ tags:
   - Auth
 summary: Logout user
 operationId: logoutUser
-description: 'Logout user from the app'
-security:
-  - bearerAuth: []
+description: 'Logout a user from the app. This will invalidate the user session and clear any authentication tokens.'
+security: []
 responses:
   '204':
-    description: 'The user is logged out'
+    description: 'User is successfully logged out. No content is returned.'
   '401':
     $ref: ../../components/responses/401.yaml

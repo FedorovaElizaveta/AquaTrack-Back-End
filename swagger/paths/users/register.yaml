@@ -2,9 +2,8 @@ tags:
   - Auth
 summary: Register new user
 operationId: registerUser
-description: 'Register new user'
-security:
-  - bearerAuth: []
+description: 'Register new user with their email and password.'
+security: []
 requestBody:
   content:
     application/json:
@@ -15,16 +14,18 @@ requestBody:
           - password
         properties:
           email:
-            description: "User's email"
+            description: "User's email should be unique. It must be a valid email format."
             type: string
             example: 'johndoe@gmail.com'
           password:
-            description: "User's password"
+            description: "User's password must be between 6 and 30 characters long and cannot be empty."
             type: string
+            minLength: 6
+            maxLength: 30
             example: 'password123'
 responses:
   '201':
-    description: 'Registers new user'
+    description: 'New user successfully registered. Returns a status code, a success message and user information.'
     content:
       application/json:
         schema:
