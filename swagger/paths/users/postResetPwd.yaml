@@ -2,9 +2,8 @@ tags:
   - Auth
 summary: Reset password
 operationId: resetPassword
-description: 'Reset Password after received email'
-security:
-  - bearerAuth: []
+description: 'Reset Password after received email.'
+security: []
 requestBody:
   content:
     application/json:
@@ -15,16 +14,16 @@ requestBody:
           - token
         properties:
           password:
-            description: 'New reset password'
+            description: "New user's password must be between 6 and 30 characters long and cannot be empty."
             type: string
             example: 'password123'
           token:
-            description: 'Token from brevo-email'
+            description: 'The reset token received from the Brevo email.'
             type: string
             example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NmM2Mzg4NmQxODBhZWFmMDA0Mjc5MjkiLCJlbWFpbCI6ImlycG9sZ0B1a3IubmV0IiwiaWF0IjoxNzI1MDQ2Nzc1LCJleHAiOjE3MjUwNDcwNzV9.bpKD50jiRqn9NqaTOByuxvbwWZP8UWFMYs2daRGb7Dw'
 responses:
   '200':
-    description: Reset password for user
+    description: 'Password has been successfully reset. Returns a status code, a success message and user information.'
     content:
       application/json:
         schema:
@@ -44,29 +43,6 @@ responses:
               type: object
               properties: {}
   '401':
-    description: Unauthorized error
-    content:
-      application/json:
-        schema:
-          type: object
-          required:
-            - status
-            - message
-            - data
-          properties:
-            status:
-              type: integer
-              example: 401
-            message:
-              type: string
-              example: 'UnauthorizedError'
-            data:
-              type: object
-              required:
-                - message
-              properties:
-                message:
-                  type: string
-                  example: 'Token is expired or invalid'
+    $ref: '../../components/responses/401.yaml'
   '404':
     $ref: '../../components/responses/404.yaml'
