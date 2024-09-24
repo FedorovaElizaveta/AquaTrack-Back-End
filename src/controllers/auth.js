@@ -162,10 +162,6 @@ export const resetPasswordController = async (req, res) => {
 export const getAllUsersController = async (req, res) => {
   const users = await getAllUsers();
 
-  if (!users) {
-    throw createHttpError(404, 'Users not found');
-  }
-
   res.status(200).json({
     status: 200,
     message: 'Successfully retrieved users count!',

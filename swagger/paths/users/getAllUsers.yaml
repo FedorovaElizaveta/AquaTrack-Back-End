@@ -25,7 +25,5 @@ responses:
             data:
               type: integer
               example: 50
-  '404':
-    $ref: '../../components/responses/404.yaml'
   '500':
     $ref: '../../components/responses/500.yaml'
