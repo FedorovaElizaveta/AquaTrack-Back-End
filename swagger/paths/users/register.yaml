@@ -18,9 +18,9 @@ requestBody:
             type: string
             example: 'johndoe@gmail.com'
           password:
-            description: "User's password must be between 6 and 30 characters long and cannot be empty."
+            description: "User's password must be between 8 and 30 characters long and cannot be empty."
             type: string
-            minLength: 6
+            minLength: 8
             maxLength: 30
             example: 'password123'
 responses:

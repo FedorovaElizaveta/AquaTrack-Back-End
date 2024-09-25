@@ -14,7 +14,7 @@ requestBody:
           - token
         properties:
           password:
-            description: "New user's password must be between 6 and 30 characters long and cannot be empty."
+            description: "New user's password must be between 8 and 30 characters long and cannot be empty."
             type: string
             example: 'password123'
           token:

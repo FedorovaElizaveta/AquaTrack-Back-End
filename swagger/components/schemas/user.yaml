@@ -14,7 +14,7 @@ properties:
     type: string
     example: 'johndoe@gmail.com'
   password:
-    description: "User's password, must be between 6 and 30 characters long."
+    description: "User's password, must be between 8 and 30 characters long."
     type: string
     example: 'password123'
   name:
