@@ -16,11 +16,15 @@ export const generateAuthUrl = () =>
   });
 
 export const validateCode = async (code) => {
-  const response = await googleOAuthClient.getToken(code);
-  const token = await googleOAuthClient.verifyIdToken({
-    idToken: response.tokens.id_token,
-  });
-  return token;
+  try {
+    const response = await googleOAuthClient.getToken(code);
+    const token = await googleOAuthClient.verifyIdToken({
+      idToken: response.tokens.id_token,
+    });
+    return token;
+  } catch {
+    throw new Error('Invalid OAuth token');
+  }
 };
 
 export const getFullNameFromGoogleTokenPayload = (payload) => {

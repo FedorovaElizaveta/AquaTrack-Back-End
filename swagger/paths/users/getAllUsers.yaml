@@ -1,0 +1,52 @@
+tags:
+  - Auth
+summary: Get users count
+operationId: getAllUsers
+description: 'Use this endpoint to count all users'
+security: []
+responses:
+  '200':
+    description: 'Get all users'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'Successfully found users'
+            data:
+              type: integer
+              example: 50
+  '404':
+    description: 'Not found error'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 404
+            message:
+              type: string
+              example: 'Not found error'
+            data:
+              type: object
+              required:
+                - message
+              properties:
+                message:
+                  type: string
+                  example: 'Users not found'

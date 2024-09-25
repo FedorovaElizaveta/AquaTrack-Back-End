@@ -10,10 +10,15 @@ import {
   refreshTokensController,
   patchUserController,
   getUserInfoController,
+  sendResetEmailController,
+  resetPasswordController,
+  getAllUsersController,
 } from '../controllers/auth.js';
 import {
   registerLoginUserSchema,
   patchUserSchema,
+  sendResetEmailSchema,
+  resetPasswordSchema,
 } from '../validation/auth.js';
 import { auth } from '../middlewares/auth.js';
 import { upload } from '../middlewares/upload.js';
@@ -49,5 +54,21 @@ router.patch(
 );
 
 router.get('/info', auth, ctrlWrapper(getUserInfoController));
+
+router.post(
+  '/send-reset-email',
+  jsonParser,
+  validateBody(sendResetEmailSchema),
+  ctrlWrapper(sendResetEmailController),
+);
+
+router.post(
+  '/reset-pwd',
+  jsonParser,
+  validateBody(resetPasswordSchema),
+  ctrlWrapper(resetPasswordController),
+);
+
+router.get('/all-users', ctrlWrapper(getAllUsersController));
 
 export default router;
