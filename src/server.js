@@ -18,6 +18,17 @@ export const setupServer = () => {
   app.use(cors());
   app.use(express.json());
   app.use(cookieParser());
+
+  const corsOptions = {
+    origin: [
+      'http://localhost:5173',
+      'https://aqua-track-frontend-smoky.vercel.app',
+    ],
+    credentials: true,
+  };
+  app.use(cors(corsOptions));
+  app.options('*', cors(corsOptions));
+
   app.use(
     pino({
       transport: {
